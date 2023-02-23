@@ -20,6 +20,19 @@ class InviteUserView(views.APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+    def put(self, request):
+        if email := request.data.get('email'):
+            send_verification_code(
+                get_object_or_404(
+                    get_user_model(),
+                    email=email,
+                    is_active=False,
+                )
+            )
+            Response('Resend verification_code is successful.', status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'error': 'Email is required.'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ActivateUserView(views.APIView):
     permission_classes = [AllowAny]
