@@ -26,6 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
     def save(self, *args, **kwargs):
+        '''functional create random 6 digits and save to field "verification_code" for invite user'''
         if not self.pk:
             self.verification_code = random.randint(100000, 999999)
         super().save(*args, **kwargs)
