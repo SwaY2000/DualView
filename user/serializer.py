@@ -16,3 +16,21 @@ class InviteUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return User.objects.create(**validated_data)
+
+
+class ActivateUserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(max_length=255)
+
+    class Meta:
+        model = User
+        fields = ['verification_code']
+
+    def validate(self, data):
+        if getattr(self, 'instance', None).verification_code != data.get('verification_code'):
+            raise serializers.ValidationError('Wrong verification_code')
+        return data
+
+    def update(self, instance, validated_data):
+        instance.is_active = True
+        instance.verification_code = None
+        return instance
