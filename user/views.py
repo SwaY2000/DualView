@@ -1,10 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import render
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import views, status
 
+from .permissions import IsOwnerAndAuthenticated
 from .serializer import InviteUserSerializer, ActivateUserSerializer, UserSerializer
 from .tasks import send_verification_code
 
@@ -55,7 +56,9 @@ class ActivateUserView(views.APIView):
             return Response({'error': 'Email is required.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserFriend(views.APIView):
+class UserFriendView(views.APIView):
+    permission_classes = [IsOwnerAndAuthenticated]
+
     def post(self, request):
         friend = get_object_or_404(get_user_model(), id=request.data.get('id', ''))
         if request.user == friend:
