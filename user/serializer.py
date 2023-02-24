@@ -4,6 +4,11 @@ from rest_framework.validators import UniqueValidator
 from .models import User
 from .utils import pattern_password
 
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'friend', 'friend_requests_sent', 'friend_requests_received']
+
 
 class InviteUserSerializer(serializers.ModelSerializer):
     username = serializers.CharField(max_length=20, validators=[UniqueValidator(queryset=User.objects.all())])
