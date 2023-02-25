@@ -50,7 +50,8 @@ class ActivateUserView(views.APIView):
             )
             if serializer.is_valid():
                 serializer.save()
-                return Response(serializer.data, status=201)
+                user_serializer = UserSerializer(serializer.instance)
+                return Response(user_serializer.data, status=201)
             return Response(serializer.errors, status=400)
         else:
             return Response({'error': 'Email is required.'}, status=status.HTTP_400_BAD_REQUEST)
