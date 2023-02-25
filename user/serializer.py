@@ -20,7 +20,7 @@ class InviteUserSerializer(serializers.ModelSerializer):
         fields = ['username', 'email', 'password']
 
     def create(self, validated_data):
-        return User.objects.create(**validated_data)
+        return User.objects.create_user(**validated_data)
 
 
 class ActivateUserSerializer(serializers.ModelSerializer):
