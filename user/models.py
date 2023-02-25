@@ -16,9 +16,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     friend = models.ManyToManyField('self', related_name='friends', symmetrical=False, blank=True)
-    friend_requests_sent = models.ManyToManyField('self', related_name='friend_requests_sent', symmetrical=False,
+    friend_requests_sent = models.ManyToManyField('self', related_name='user_friend_requests_sent', symmetrical=False,
                                                   blank=True)
-    friend_requests_received = models.ManyToManyField('self', related_name='friend_requests_received',
+    friend_requests_received = models.ManyToManyField('self', related_name='user_friend_requests_received',
                                                       symmetrical=False, blank=True)
 
     USERNAME_FIELD = 'email'

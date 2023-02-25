@@ -24,8 +24,6 @@ class InviteUserSerializer(serializers.ModelSerializer):
 
 
 class ActivateUserSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(max_length=255)
-
     class Meta:
         model = User
         fields = ['verification_code']
@@ -38,4 +36,5 @@ class ActivateUserSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         instance.is_active = True
         instance.verification_code = None
+        instance.save()
         return instance
