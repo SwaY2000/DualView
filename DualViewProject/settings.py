@@ -131,7 +131,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'rest_framework/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -172,13 +173,15 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.FileSystemStorage'
 
 # AWS
-ACCESS_KEY_AWS = os.getenv('ACCESS_KEY_AWS')
-SECRET_ACCESS_KEY_AWS = os.getenv('SECRET_ACCESS_KEY_AWS')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
 AWS_S3_USE_SSL = True
 AWS_S3_SECURE_URLS = True
 AWS_QUERYSTRING_AUTH = False
+
+STATICFILES_DIRS = [BASE_DIR / 'rest_framework']
