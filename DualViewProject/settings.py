@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'storages',
     'user',
     'room'
 ]
@@ -169,3 +170,15 @@ AUTH_USER_MODEL = 'user.User'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend'
 ]
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# AWS
+ACCESS_KEY_AWS = os.getenv('ACCESS_KEY_AWS')
+SECRET_ACCESS_KEY_AWS = os.getenv('SECRET_ACCESS_KEY_AWS')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_S3_USE_SSL = True
+AWS_S3_SECURE_URLS = True
+AWS_QUERYSTRING_AUTH = False
