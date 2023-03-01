@@ -1,5 +1,5 @@
 from rest_framework import status, views
-from rest_framework.generics import RetrieveAPIView
+from rest_framework import generics
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 
@@ -19,7 +19,12 @@ class VideoView(views.APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class VideoDetailView(RetrieveAPIView):
+class VideoDetailView(generics.RetrieveAPIView):
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
     lookup_field = 'id'
+
+
+class VideoListView(generics.ListAPIView):
+    queryset = Video.objects.all()
+    serializer_class = VideoSerializer
