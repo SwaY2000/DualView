@@ -9,7 +9,7 @@ class VideoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Video
-        fields = ('id', 'title', 'description', 'video_file')
+        fields = ('id', 'title', 'description', 'video_file', 'poster_image')
 
     def create(self, validated_data):
         video_file = validated_data.pop('video_file')
