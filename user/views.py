@@ -90,6 +90,7 @@ class UserFriendView(views.APIView):
 
 
 class UserListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
 
     def get_queryset(self):
