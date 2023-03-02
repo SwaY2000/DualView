@@ -2,13 +2,16 @@ from rest_framework import status, views
 from rest_framework import generics
 from rest_framework.generics import get_object_or_404
 from rest_framework.parsers import MultiPartParser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Video
+from .permissions import IsStuffAndAuthenticated
 from .serializers import VideoSerializer
 
 
 class VideoView(views.APIView):
+    permission_classes = [IsStuffAndAuthenticated]
     parser_classes = (MultiPartParser,)
 
     def post(self, request, format=None):
@@ -30,6 +33,8 @@ class VideoView(views.APIView):
 
 
 class VideoDetailView(views.APIView):
+    permission_classes = [IsAuthenticated]
+
     def get(self, request, id, format=None):
         serializer = VideoSerializer(
             get_object_or_404(
@@ -54,5 +59,6 @@ class VideoDetailView(views.APIView):
 
 
 class VideoListView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Video.objects.all()
     serializer_class = VideoSerializer
